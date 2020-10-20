@@ -66,6 +66,11 @@ echo "Setting up Users..."
 
 ./create-user.sh "${TEST_JUDGE_X_USERNAME}" "Judge" "X" "${TEST_JUDGE_X_PASSWORD}" "caseworker" "[{ \"code\": \"caseworker-ia\"}, { \"code\": \"caseworker-ia-iacjudge\"}]"
 
+# Setup role assignments
+echo ""
+echo "Setting up tole assignments"
+./organisational-role-assignment.sh "${TEST_CASEOFFICER_USERNAME}" "${TEST_CASEOFFICER_PASSWORD}"
+
 # Refresh cache
 echo ""
 echo "Refreshing cache..."
