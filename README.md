@@ -1,4 +1,4 @@
-# Work Allocation Dev Environment
+# SSCS Work Allocation Dev Environment
 
 A Kubernetes environment with all the necessary services for local development using helm charts and deployed with
 helmfile.
