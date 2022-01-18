@@ -33,7 +33,7 @@ curl --silent --show-error -X POST "${ROLE_ASSIGNMENT_URL}/am/role-assignments" 
           "assignerId": "'"${USER_ID}"'",
           "process": "staff-organisational-role-mapping",
           "reference": "'"${USER_ID}/${ROLE_NAME}"'",
-          "replaceExisting": true
+          "replaceExisting": false
         },
         "requestedRoles": [
           {
