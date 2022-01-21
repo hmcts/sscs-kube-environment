@@ -27,7 +27,7 @@ echo "Setting up WA Users and role assignments..."
 ./actions/organisational-role-assignment.sh "${TEST_WA_CASEOFFICER_PUBLIC_D_USERNAME}" "${TEST_WA_CASEOFFICER_PUBLIC_D_PASSWORD}" "PUBLIC" "tribunal-caseworker" '{"jurisdiction":"IA","region":"east-england","primaryLocation":"765324"}'
 
 echo "Setting up SSCS Users and role assignments..."
-./actions/create-user.sh "${IDAM_SSCS_SYSTEMUPDATE_USER}" "SSCSSystem" "SSCSUser" "${IDAM_SSCS_SYSTEMUPDATE_PASSWORD}" "caseworker" "[{ \"code\": \"caseworker\"}, { \"code\": \"caseworker-sscs\"}, { \"code\": \"caseworker-sscs-systemupdate\"}]"
+./actions/create-user.sh "${IDAM_SSCS_SYSTEMUPDATE_USER}" "SSCSSystem" "SSCSUser" "${IDAM_SSCS_SYSTEMUPDATE_PASSWORD}" "caseworker" "[{ \"code\": \"caseworker\"}, { \"code\": \"caseworker-sscs\"}, { \"code\": \"caseworker-sscs-systemupdate\"}, { \"code\": \"caseworker-wa-task-configuration\"}]"
 
-./actions/create-user.sh "${CASE_WORKER_USER}" "CaseOfficer" "A-Public" "${CASE_WORKER_PASSWORD}" "caseworker" "[{ \"code\": \"caseworker\"}, { \"code\": \"caseworker-sscs\"}, { \"code\": \"caseworker-sscs-tcw\"}]"
+./actions/create-user.sh "${CASE_WORKER_USER}" "CaseOfficer" "A-Public" "${CASE_WORKER_PASSWORD}" "caseworker" "[{ \"code\": \"caseworker\"}, { \"code\": \"caseworker-sscs\"}, { \"code\": \"caseworker-sscs-clerk\"}, { \"code\": \"caseworker-wa-task-configuration\"}]"
 ./actions/organisational-role-assignment.sh "${CASE_WORKER_USER}" "${CASE_WORKER_PASSWORD}" "PUBLIC" "tribunal-caseworker" '{"jurisdiction":"SSCS","primaryLocation":"765324"}'

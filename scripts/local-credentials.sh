@@ -6,7 +6,7 @@
 BASEDIR=$(dirname "$0")
 
 #1. Login and obtain access token
-USER_RESPONSE=$($BASEDIR/user-details.sh "${TEST_WA_CASEOFFICER_PUBLIC_A_USERNAME}" "${TEST_WA_CASEOFFICER_PUBLIC_A_PASSWORD}")
+USER_RESPONSE=$($BASEDIR/user-details.sh "${IDAM_SSCS_SYSTEMUPDATE_USER}" "${IDAM_SSCS_SYSTEMUPDATE_PASSWORD}")
 
 S2S_TOKEN=$($BASEDIR/actions/idam-service-token.sh "wa_task_management_api")
 
