@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 LABEL="${1:-ccd_gateway}"
 SELF_REG="${2:-false}"

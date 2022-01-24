@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "-> Performing Login"
 TOKEN=$(az acr login --name hmctsprivate --subscription DCD-CNP-PROD --expose-token | jq --raw-output '.accessToken')
