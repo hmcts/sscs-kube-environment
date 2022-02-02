@@ -10,7 +10,7 @@ app:
         name: http
     env:
       - key: "MICROSERVICE"
-        value: iac
+        value: sscs
       - key: "PROTOCOL"
         value: http
       - key: "XUI_ENV"
@@ -54,7 +54,7 @@ app:
       - key: "LAUNCH_DARKLY_CLIENT_ID"
         value: 5de6610b23ce5408280f2268
       - key: "JURISDICTIONS"
-        value: IA,WA
+        value: SSCS,WA
       - key: "SYSTEM_USER_NAME"
         value: "dummy"
       - key: "SYSTEM_USER_PASSWORD"
@@ -64,7 +64,7 @@ app:
       - key: "SERVICES_WORK_ALLOCATION_TASK_API"
         value: {{ requiredEnv "TASK_MANAGEMENT_API_URL" }}
       - key: "FEATURE_WORKALLOCATION_ENABLED"
-        value: false
+        value: true
       - key: "SERVICES_DOCUMENTS_API_V2"
         value: http://ccd-case-document-am-api
       - key: "SERVICES_EM_DOCASSEMBLY_API"

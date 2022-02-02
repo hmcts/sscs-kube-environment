@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 NAMESPACE="hmcts-local"
 SECRET_NAME="hmcts-private-creds"
