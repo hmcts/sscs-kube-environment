@@ -1,0 +1,22 @@
+app:
+  name: ccd-elasticsearch
+  group: backend
+  replicaCount: 1
+  container:
+    image: docker.elastic.co/elasticsearch/elasticsearch
+    tag: 6.4.2
+    ports:
+      - containerPort: 9200
+        servicePort: 80
+        name: http
+    env:
+      - key: "cluster.name"
+          value: es
+      - key: "discovery.type"
+        value: single-node
+      - key: "APPINSIGHTS_INSTRUMENTATIONKEY"
+        value: key
+      - key: "S2S_SECRET"
+        value: {{ requiredEnv "IDAM_KEY_CCD_GATEWAY" }}
+      - key: "IDAM_SECRET"
+        value: {{ requiredEnv "OAUTH2_CLIENT_CCD_GATEWAY" }}

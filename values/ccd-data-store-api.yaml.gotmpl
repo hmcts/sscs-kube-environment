@@ -1,7 +1,7 @@
 app:
   name: ccd-data-store-api
   group: backend
-  replicaCount: 2
+  replicaCount: 1
   container:
     image: hmctspublic.azurecr.io/ccd/data-store-api
     tag: latest
@@ -25,13 +25,13 @@ app:
       - key: "DATA_STORE_IDAM_KEY"
         value: {{ requiredEnv "IDAM_KEY_CCD_DATA_STORE" }}
       - key: "IDAM_DATA_STORE_SYSTEM_USER_USERNAME"
-        value: ccd-import@fake.hmcts.net
+        value: ccd.docker.default@hmcts.net ##align these
       - key: "IDAM_DATA_STORE_SYSTEM_USER_PASSWORD"
-        value: London01
+        value: Pa55word11
       - key: "DATA_STORE_TOKEN_SECRET"
         value: iuasbcuasdcbasdgcasdgcuysachjsacyasdgjcgasdj
       - key: "DATA_STORE_S2S_AUTHORISED_SERVICES"
-        value: ccd_gw,fpl_case_service,ccd_data,ccd_ps,iac,wa_workflow_api,wa_task_configuration_api,wa_task_management_api,wa_task_monitor,ccd_case_document_am_api
+        value: ccd_gw,fpl_case_service,ccd_data,ccd_ps,iac,wa_workflow_api,wa_task_configuration_api,wa_task_management_api,wa_task_monitor,ccd_case_document_am_api,sscs
       - key: "DEFINITION_STORE_HOST"
         value: http://ccd-definition-store-api
       - key: "USER_PROFILE_HOST"

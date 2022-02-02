@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NAMESPACE="hmcts-local"
+NAMESPACE="sscs"
 SECRET_NAME="hmcts-private-creds"
 
 echo "ℹ️  Setting up Local development environment"
@@ -13,12 +13,12 @@ echo "↪️️  Creating $NAMESPACE namespace"
 kubectl create namespace $NAMESPACE
 
 echo "↪️  Creating persistent volume"
-kubectl apply -f ./charts/pv.yaml -n hmcts-local
+kubectl apply -f ./charts/pv.yaml -n sscs
 echo "↪️  Creating persistent volume claim"
-kubectl apply -f ./charts/pvc.yaml -n hmcts-local
+kubectl apply -f ./charts/pvc.yaml -n sscs
 
 echo "↪️  Applying ingress config"
-kubectl apply -f ./ingress/ingress.yaml -n hmcts-local
+kubectl apply -f ./ingress/ingress.yaml -n sscs
 #kubectl patch configmap nginx-ingress-tcp-microk8s-conf -n ingress --patch '{"data":{"5432":"hmcts-local/ccd-shared-database:5432"}}'
 #manually patch daemonset
 #microk8s.kubectl patch configmap nginx-ingress-tcp-microk8s-conf --patch '{"data":{"5432":"hmcts-local/ccd-shared-database:5432"}}'-n ingress
@@ -34,7 +34,7 @@ kubectl create secret docker-registry $SECRET_NAME \
   -n $NAMESPACE
 
 echo "↪️  Starting deployments"
-/home/dattipoe/helmfile/helmfile  -n hmcts-local sync  #Add to path
+/home/dattipoe/helmfile/helmfile -n sscs sync  #Add to path
 
 
  #k3d cluster create local --port 9001:80@loadbalancer"

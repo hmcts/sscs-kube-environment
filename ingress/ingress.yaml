@@ -53,7 +53,7 @@ spec:
               service:
                 name: fr-am
                 port:
-                  number: 8080
+                  number: 8027
     - host: fr-idm
       http:
         paths:
