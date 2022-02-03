@@ -23,7 +23,7 @@ if [[ -z "${SSCS_TASK_DMNS_BPMNS_PATH}" ]]; then
 else
   echo ""
   echo ""
-  echo "Deploying IA Task Configuration BPMN and DMNs..."
+  echo "Deploying SSCS Task Configuration BPMN and DMNs..."
   $SSCS_TASK_DMNS_BPMNS_PATH/camunda-deployment.sh $SERVICE_TOKEN
 fi
 
