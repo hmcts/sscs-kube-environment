@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 EXTERNAL_IMAGES=(
   bitnami/postgresql
