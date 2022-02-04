@@ -70,10 +70,10 @@ app:
       - key: "SERVICES_EM_DOCASSEMBLY_API"
         value: http://wiremock
 
-    readinessProbe:
-      enabled: true
-      httpGet:
-        path: /health
-        port: 3000
-      initialDelaySeconds: 300
-      periodSeconds: 30
+#    readinessProbe:
+#      enabled: true
+#      httpGet:
+#        path: /health
+#        port: 3000
+#      initialDelaySeconds: 300
+#      periodSeconds: 30

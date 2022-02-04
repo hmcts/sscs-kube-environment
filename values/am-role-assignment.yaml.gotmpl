@@ -3,7 +3,7 @@ app:
   group: backend
   container:
     image: hmctspublic.azurecr.io/am/role-assignment-service
-    tag: pr-1096-c3a9c48-20220113155803 #####Image might be delated from ACR, in this case rebuild am-role-assignment-serve PR-1096
+    tag: pr-1096-05f064e-20220203120603 #####Image might be delated from ACR, in this case rebuild am-role-assignment-serve PR-1096
     ports:
       - containerPort: 8080
         servicePort: 80
@@ -20,7 +20,7 @@ app:
       - key: "ROLE_ASSIGNMENT_DB_PASSWORD"
         value: {{ requiredEnv "CCD_DB_PASSWORD" }}
       - key: "ROLE_ASSIGNMENT_S2S_AUTHORISED_SERVICES"
-        value: ccd_gw,am_role_assignment_service,am_org_role_mapping_service,wa_task_management_api,wa_task_configuration_api,iac,xui_webapp,aac_manage_case_assignment,ccd_data,sscs
+        value: ccd_gw,am_role_assignment_service,am_org_role_mapping_service,wa_task_management_api,wa_task_configuration_api,xui_webapp,aac_manage_case_assignment,ccd_data,sscs
       - key: "AM_ROLE_ASSIGNMENT_SERVICE_SECRET"
         value: {{ requiredEnv "S2S_SECRET_ROLE_ASSIGNMENT_API" }}
       - key: "IDAM_USER_URL"
