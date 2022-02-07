@@ -24,7 +24,17 @@ spec:
                 name: ccd-user-profile-api
                 port:
                   number: 80
-    - host: ccd-shared-database
+    # - host: ccd-elasticsearch
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: ccd-elasticsearch
+    #             port:
+    #               number: 80
+    - host: ccd-shared-database ###probably wrong####### check this for port forwarding.
       http:
         paths:
           - path: /
