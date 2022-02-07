@@ -4,23 +4,21 @@ NAMESPACE="hmcts-local"
 SECRET_NAME="hmcts-private-creds"
 
 echo "ℹ️  Setting up Local development environment"
-echo "↪️️  Switching context to minikube"
+#echo "↪️️  Switching context to minikube"
 #Switch to local cluster to avoid attempting to deploy in other clusters
-kubectl config use-context minikube
+#kubectl config use-context microk8s
 
 echo "↪️️  Creating $NAMESPACE namespace"
 #This might error if namespace already exist, but will not stop the script.
 kubectl create namespace $NAMESPACE
 
 echo "↪️  Creating persistent volume"
-kubectl apply -f ./charts/pv.yaml -n hmcts-local
+kubectl apply -f ./charts/pv.yaml -n $NAMESPACE
 echo "↪️  Creating persistent volume claim"
-kubectl apply -f ./charts/pvc.yaml -n hmcts-local
+kubectl apply -f ./charts/pvc.yaml -n $NAMESPACE
 
 echo "↪️  Applying ingress config"
-kubectl apply -f ./ingress/ingress.yaml -n hmcts-local
-kubectl patch configmap tcp-services -n ingress-nginx --patch '{"data":{"5432":"hmcts-local/ccd-shared-database:5432"}}'
-kubectl patch deployment ingress-nginx-controller --patch "$(cat ./ingress/ingress-patch.yaml)" -n ingress-nginx
+kubectl apply -f ./ingress/ingress.yaml -n $NAMESPACE
 
 echo "↪️  Obtaining ACR token"
 TOKEN=$(az acr login --name hmctsprivate --subscription DCD-CNP-PROD --expose-token | jq --raw-output '.accessToken')
@@ -33,4 +31,5 @@ kubectl create secret docker-registry $SECRET_NAME \
   -n $NAMESPACE
 
 echo "↪️  Starting deployments"
-helmfile -n hmcts-local sync
+helmfile -n $NAMESPACE sync  #Add to PATH or provide full path here
+

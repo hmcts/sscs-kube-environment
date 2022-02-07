@@ -29,7 +29,7 @@ app:
       initialDelaySeconds: 300
       periodSeconds: 30
   service:
-    type: NodePort
+    type: ClusterIP
     port: 80
   volume:
     enabled: false
