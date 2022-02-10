@@ -97,6 +97,7 @@ docker logout hmctspublic.azurecr.io
 
 ### 5. Build and start local WA environment:
 :warning: Either ensure helmfile is on your PATH or fill in the binary's path at the bottom of up.sh
+Elastic search requires a higher vm.max_map_count. Increase with sudo sysctl -w vm.max_map_count=262144, add to bashprofile or similar.
 ```shell
 ./environment up
 ```
@@ -162,13 +163,18 @@ Then run:
 
 To access any of the service, Ingress should be enabled
 
-##### 1. Update /etc/hosts to route the hosts to the WSL2 cluster ip
+##### 1. Update Ubuntu /etc/hosts to route the service names to Ubuntu localhost (translates to k3s cluster loadbalancer)
 
 ```shell
-echo "$(wsl-ip) ccd-shared-database service-auth-provider-api ccd-user-profile-api shared-db ccd-definition-store-api idam-web-admin ccd-definition-store-api ccd-data-store-api ccd-api-gateway wiremock xui-webapp camunda-local-bpm am-role-assignment sidam-simulator local-dm-store ccd-case-document-am-api" | sudo tee -a /etc/hosts
+echo "127.0.0.1 ccd-shared-database service-auth-provider-api ccd-user-profile-api shared-db ccd-definition-store-api idam-web-admin ccd-definition-store-api ccd-data-store-api ccd-api-gateway wiremock xui-webapp camunda-local-bpm am-role-assignment sidam-simulator local-dm-store ccd-case-document-am-api" | sudo tee -a /etc/hosts
 ```
-
-`$(wsl-ip)` should be retrieved using ifconfig or similar. Sadly, for now, this will change every restart
+Example result:
+127.0.0.1 xui-webapp sidam-simulator
+127.0.0.1 ccd-shared-database service-auth-provider-api ccd-user-profile-api
+127.0.0.1 shared-db ccd-definition-store-api idam-web-admin ccd-definition-store-api
+127.0.0.1 ccd-data-store-api ccd-api-gateway wiremock
+127.0.0.1 camunda-local-bpm am-role-assignment local-dm-store
+127.0.0.1 ccd-case-document-am-api ccd-elasticsearch
 
 To access any service type
 `http://<name-of-service>`
@@ -177,8 +183,6 @@ For example:
 
 `http://xui-webapp`
 
-If you are using safari browser and if you see page error. Try with chrome.
-
 ### 7. To stop and teardown local WA environment:
 
 If you need to stop and teardown run cmd
@@ -186,16 +190,33 @@ If you need to stop and teardown run cmd
 ```shell
 ./environment down
 ```
-To completely remove any stored data run kubectl delete pv shared-pv-volume. 
-### Known issues
-- Persistence of users and roles - SIDAM simulator holds these in memory.
-- Changing WSL IPs. Need to change in Windows Hosts, and TASK_MANAGEMENT_API_URL in .env.
-  Ubuntu names need to point to 127.0.0.1 in /etc/hosts.
-- Postgres needs to be port forwarded for services to connect, watch ./environment up logs for command to port forward.
-- Elastic search requires a higher vm.max_map_count. Increase with sudo sysctl -w vm.max_map_count=262144 or add to     
-  bashprofile or similar.        
+The above script deletes the ACR secret, destroys the helm deployments, the namespace, and finally, the persistent volume. 
+You can run any of the commands in isolation as required.
 
-## Features
+### 8. Useful commands
+To sync changes to the Helm charts (changes in the chart yaml, gotmpl or referenced environment variables within):
+
+```shell
+helmfile -n hmcts-local sync 
+```
+
+To scale all deployments in a namespace:
+Change --replicas=x to 0 to bring all pods down, 1 to bring up one of each pod.
+
+```shell
+kubectl get -n hmcts-local deployments | awk '/^s|c|a/ {print $1}' | xargs kubectl scale -n hmcts-local --replicas=1 deployment
+```
+### 9. Known issues
+- Persistence of users and roles - SIDAM simulator holds these in memory- you need to reimport these whenever the pod goes down.
+- Changing WSL IPs: Windows Hosts needs to be updated with the new WSL ip address on every restart - important if you wish to navigate to the UI or execute commands
+  from Windows. Use ifconfig or similar to get the IP address.
+- Ubuntu names need to point to 127.0.0.1 in /etc/hosts. These can reset themselves between restarts, check these if hosts cannot be resolved.
+- Postgres needs to be port forwarded for services to connect, in a new shell:
+```shell
+kubectl port-forward --namespace hmcts-local svc/ccd-shared-database 5432:5432 & PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d ccd -p 5432
+```
+- Elastic search requires a higher vm.max_map_count. Increase with sudo sysctl -w vm.max_map_count=262144, add to     
+  bashprofile or similar.        
 
 ### CCD message publishing to Azure Service Bus
 
