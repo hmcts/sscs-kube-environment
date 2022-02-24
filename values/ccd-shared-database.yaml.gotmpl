@@ -9,9 +9,6 @@ postgresqlUsername: postgres
 postgresqlPassword: postgres
 postgresqlDatabase: ccd
 
-service:
-  type: ClusterIP
-  port: 5432
 persistence:
   enabled: true
   mountPath: /var/lib/postgresql/ccd-shared-db/data
